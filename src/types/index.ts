@@ -1,30 +1,60 @@
-interface IModal {
-  content: HTMLElement;
-  closeButton: HTMLButtonElement;
-  open(): void;
-  close(): void; 
-
+export interface IOrderForms {
+	payment: string;
+	address: string;
+	email: string;
+	phone: string;
 }
 
-interface IPage {
-  catalogContainer: HTMLElement[];
+export interface IOrder {
+	items: string[];
+	payment: string;
+	address: string;
+	email: string;
+	phone: string;
+	total: number;
 }
 
-interface IBasketView {
-  total: number;
-  items: HTMLElement[];
+export type CategoryType =
+	| 'софт-скил'
+	| 'другое'
+	| 'дополнительное'
+	| 'кнопка'
+	| 'хард-скил';
+
+export type CategorySelection = {
+	[Key in CategoryType]: string;
+};
+
+export interface IProduct {
+	id: string;
+	description: string;
+	image: string;
+	title: string;
+	category: CategoryType;
+	price: number | null;
+	selected: boolean;
 }
 
-interface IForm {
-  valid: boolean;
-  errors: string[];
+export type GalleryChangeEvent = {
+	gallery: IProduct[];
+};
+
+export interface IOrderResult {
+	id: string;
+  total: number
+  error?: string
 }
 
-interface ICard {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  category: string;
-  price: number;
+export interface IAppState {
+	catalog: IProduct[];
+	basket: string[];
+	order: IOrder;
+}
+
+export type FormErrors = Partial<Record<keyof IOrderForms, string>>;
+
+export interface IAPI {
+	getItem: (id: string) => Promise<IProduct>;
+	getItemList: () => Promise<IProduct[]>;
+	orderItems: (order: IOrder) => Promise<IOrderResult>;
 }
