@@ -28,12 +28,12 @@ export class Form<T> extends Component<IForm> {
 
 		this.container.addEventListener('submit', (e: Event) => {
 			e.preventDefault();
-			this.events.emit('order:submit');
+			this.events.emit(`${this.container.name}:submit`);
 		});
 	}
 	//изменение полей инпута
 	protected onInputChange(value: string, field: keyof T) {
-		this.events.emit('orderInput:change', {
+		this.events.emit(`${this.container.name}.${String(field)}:change`, { 
 			value,
 			field,
 		});
@@ -46,7 +46,7 @@ export class Form<T> extends Component<IForm> {
 
 	//отключение кнопки "далее" в случае невалидности данных
 	set valid(value: boolean) {
-		this._submit.disabled = !value;
+		this.setDisabled(this._submit, !value);
 	}
 
 	//отрисовка данных формы

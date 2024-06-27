@@ -20,15 +20,15 @@ export class Order extends Form<IOrder> {
 
 		if (this._cash) {
 			this._cash.addEventListener('click', () => {
-				this._cash.classList.add('button_alt-active');
-				this._online.classList.remove('button_alt-active');
+				this.toggleClass(this._cash, 'button_alt-active', true)
+				this.toggleClass(this._online, 'button_alt-active', false)
 				this.onInputChange('cash', 'payment');
 			});
 		}
 		if (this._online) {
 			this._online.addEventListener('click', () => {
-				this._online.classList.add('button_alt-active');
-				this._cash.classList.remove('button_alt-active');
+				this.toggleClass(this._cash, 'button_alt-active', false)
+				this.toggleClass(this._online, 'button_alt-active', true)
 				this.onInputChange('card', 'payment');
 			});
 		}
@@ -36,8 +36,8 @@ export class Order extends Form<IOrder> {
 
 	//отключение выделения кнопок способа оплаты
 	disableButtons() {
-		this._online.classList.remove('button_alt-active');
-		this._cash.classList.remove('button_alt-active');
+		this.toggleClass(this._cash, 'button_alt-active', false);
+		this.toggleClass(this._online, 'button_alt-active', false);
 	}
 
 	//установка значения адреса

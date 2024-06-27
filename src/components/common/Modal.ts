@@ -30,14 +30,14 @@ export class Modal extends Component<IModal> {
 
 	//закрытие модального окна
 	close() {
-		this.container.classList.remove('modal_active');
+		this.toggleClass(this.container, 'modal_active', false);
 		this.content = null;
 		this.events.emit('modal:closed');
 	}
 
 	//открытие модального окна
 	open() {
-		this.container.classList.add('modal_active');
+		this.toggleClass(this.container, 'modal_active', true);
 		this.events.emit('modal:opened');
 	}
 

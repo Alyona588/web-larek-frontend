@@ -185,14 +185,14 @@ events.on('orderFormErrors:change', (errors: Partial<IOrderForms>) => {
 
 //изменилось одно из полей валидации формы
 events.on(
-	'orderInput:change',
+	/(^order|^contacts)\..*:change/,
 	(data: { field: keyof IOrderForms; value: string }) => {
 		appState.setOrder(data.field, data.value);
 	}
 );
 
 //отправка заказа на сервер и проверка на то, что он готов
-events.on('order:submit', () => {
+events.on(/(^order|^contacts):submit/, () => {
 	if (
 		!appState.getOrder().email ||
 		!appState.getOrder().address ||

@@ -41,6 +41,7 @@ export class AppState extends Model<IAppState> {
 	//удаление товара из корзины
 	deleteFromBasket(product: ProductItem) {
 		this.basket = this.basket.filter((item) => item !== product);
+		this.emitChanges('basket:open');
 	}
 
 	//получение корзины
@@ -89,7 +90,6 @@ export class AppState extends Model<IAppState> {
 		if (!this.order.payment) {
 			errors.payment = 'Укажите способ оплаты';
 		}
-
 		this.formErrors = errors;
 		this.events.emit('orderFormErrors:change', this.formErrors);
 		return Object.keys(errors).length === 0;

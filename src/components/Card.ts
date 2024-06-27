@@ -79,13 +79,13 @@ export class Card extends Component<ICard> {
 	// отключение кнопки добавления товара, если он уже выбран
 	set selected(value: boolean) {
 		if (!this._button.disabled) {
-			this._button.disabled = value;
+			this.setDisabled(this._button, value);
 		}
 	}
 
 	set category(value: CategoryType) {
-		this._category.classList.add(categorySelection[value]);
-		this._category.textContent = value;
+		this.toggleClass(this._category, `${categorySelection[value]}`, true);
+		this.setText(this._category, value);
 	}
 
 	set image(value: string) {
@@ -165,11 +165,11 @@ export class ProductInBasket extends Component<IProductBasket> {
 	}
 
 	set index(value: number) {
-		this._index.textContent = value.toString();
+		this.setText(this._index, value.toString());
 	}
 
 	set title(value: string) {
-		this._title.textContent = value;
+		this.setText(this._title, value);
 	}
 
 	set price(value: number) {

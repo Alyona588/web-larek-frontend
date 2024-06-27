@@ -28,15 +28,17 @@ export class Basket extends Component<IBasketView> {
 		this.items = [];
 	}
 	//отключение кнопки внутри корзины
-	disableButton() {
-		this._button.disabled = true;
+	disableButton(state: boolean) {
+		this.setDisabled(this._button, state);
 	}
 
 	//отрисовка товаров в корзине, если корзина пуста отрисовка надписи
 	set items(items: HTMLElement[]) {
 		if (items.length) {
 			this._list.replaceChildren(...items);
+			this.disableButton(false);
 		} else {
+			this.disableButton(true);
 			this._list.replaceChildren(
 				createElement<HTMLParagraphElement>('p', {
 					textContent: 'Корзина пуста',
@@ -45,23 +47,9 @@ export class Basket extends Component<IBasketView> {
 		}
 	}
 
-	//обновление индекса товара
-	updateIndex() {
-		Array.from(this._list.children).forEach(
-			(item, index) =>
-				(item.querySelector(`.basket__item-index`)!.textContent = (
-					index + 1
-				).toString())
-		);
-	}
-
 	//отключение кнопки "оформить", если корзина пуста
 	set selected(items: string[]) {
-		if (items.length) {
-			this.setDisabled(this._button, false);
-		} else {
-			this.setDisabled(this._button, true);
-		}
+		this.setDisabled(this._button, !items.length);
 	}
 
 	//отрисовка итоговой суммы
