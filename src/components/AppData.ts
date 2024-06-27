@@ -86,7 +86,7 @@ export class AppState extends Model<IAppState> {
 		if (!this.order.address) {
 			errors.address = 'Укажите адрес';
 		}
-		if (this.order.payment === null) {
+		if (!this.order.payment) {
 			errors.payment = 'Укажите способ оплаты';
 		}
 
